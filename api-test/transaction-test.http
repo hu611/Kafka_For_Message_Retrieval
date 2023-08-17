@@ -1,0 +1,14 @@
+GET {{transaction_host}}/synpulse/transaction?year=2022&month=2&pageNum=1
+Authorization: bearer {{jwt_token}}
+
+###test 2
+GET {{transaction_host}}/synpulse/transaction?year=2022&month=1&pageNum=-1
+Authorization: bearer {{jwt_token}}
+
+###test 3
+GET {{transaction_host}}/synpulse/transaction?year=2022&month=2&pageNum=102
+Authorization: bearer {{jwt_token}}
+
+###test 4
+GET {{transaction_host}}/synpulse/transaction?year=2025&month=2&pageNum=102
+Authorization: bearer {{jwt_token}}

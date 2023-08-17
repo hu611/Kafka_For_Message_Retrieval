@@ -1,0 +1,14 @@
+server:
+  servlet:
+    context-path: /synpulse
+  port: 3012
+spring:
+  redis:
+    host: host.docker.internal
+    port: 6379
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  kafka:
+    consumer:
+      max-poll-records: 2
