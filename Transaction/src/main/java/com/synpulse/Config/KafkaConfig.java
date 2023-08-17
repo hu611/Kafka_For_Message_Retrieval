@@ -15,8 +15,8 @@ import java.util.Properties;
 
 @Configuration
 public class KafkaConfig {
-    //public static String bootstrapServers = "host.docker.internal:9092";
-    public static String bootstrapServers = "localhost:9092";
+    public static String bootstrapServers = "host.docker.internal:9092";
+    //public static String bootstrapServers = "localhost:9092";
 
     @Bean
     public KafkaProducer<String, String> kafkaProducer() {

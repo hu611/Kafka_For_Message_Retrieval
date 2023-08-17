@@ -4,7 +4,7 @@ server:
   port: 3012
 spring:
   redis:
-    host: localhost
+    host: host.docker.internal
     port: 6379
   mvc:
     pathmatch:
