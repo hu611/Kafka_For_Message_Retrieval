@@ -1,4 +1,4 @@
-GET {{transaction_host}}/synpulse/transaction?year=2022&month=2&pageNum=1
+GET {{transaction_host}}/synpulse/transaction?year=2022&month=1&pageNum=240
 Authorization: bearer {{jwt_token}}
 
 ###test 2
