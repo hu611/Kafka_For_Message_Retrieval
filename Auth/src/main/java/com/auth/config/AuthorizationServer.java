@@ -42,20 +42,20 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("Synpulse")// client_id
+                .withClient("Synpulse")
                 .resourceIds(resource_id)
-                .authorizedGrantTypes("password")// 该client允许的授权类型authorization_code,password,refresh_token,implicit,client_credentials
-                .scopes("all")// 允许的授权范围
-                .autoApprove(true);//false跳转到授权页
+                .authorizedGrantTypes("password")
+                .scopes("all")
+                .autoApprove(true);
     }
 
 
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)//认证管理器
+        endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
-                .tokenServices(authorizationServerTokenServices)//令牌管理服务
+                .tokenServices(authorizationServerTokenServices)
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 }

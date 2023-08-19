@@ -33,7 +33,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.GET, "/transaction").authenticated()
+                .anyRequest().permitAll();
     }
 
 

@@ -31,10 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                //.antMatchers("").authenticated()//访问/r开始的请求需要认证通过
-                .anyRequest().permitAll()//其它请求全部放行
+                .anyRequest().permitAll()
                 .and()
-                .formLogin().permitAll().successForwardUrl("/login_success");//登录成功跳转到/login-success
+                .formLogin().permitAll().successForwardUrl("/login_success");
         httpSecurity.logout().logoutUrl("/logout");
         httpSecurity.csrf().disable();
     }
