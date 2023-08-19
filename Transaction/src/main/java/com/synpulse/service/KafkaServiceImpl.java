@@ -164,7 +164,7 @@ public class KafkaServiceImpl implements KafkaService {
         kafkaConsumer.assign(Collections.singletonList(topicPartition));
         kafkaConsumer.seek(topicPartition, offset);
 
-        ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(100));
+        ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(1000));
         List<Transaction> transactionList = new ArrayList<>();
         records.forEach(record -> {
             try {

@@ -1,2 +1,2 @@
 ### test authorization
-POST {{auth_host}}/auth/oauth/token?client_id=Synpulse&grant_type=password&username=3000&password=123
+POST {{auth_host}}/auth/oauth/token?client_id=Synpulse&grant_type=password&username=2653&password=123

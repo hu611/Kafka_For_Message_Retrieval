@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.util.Properties;
-
 @Configuration
 public class KafkaConfig {
     public static String bootstrapServers = "host.docker.internal:9092";
@@ -29,37 +28,34 @@ public class KafkaConfig {
         return kafkaProducer;
     }
 
-
-    @Bean
-    @Primary
-    public KafkaConsumer<String, String> kafkaConsumer() {
+    public Properties KafkaConsumerTemplate(int pollRecordNumber) {
         Properties properties = new Properties();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 1);
+        properties.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
+        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, pollRecordNumber);
+        return properties;
+    }
+
+    @Bean
+    @Primary
+    public KafkaConsumer<String, String> kafkaConsumer() {
+        Properties properties = KafkaConsumerTemplate(1);
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(properties);
         return kafkaConsumer;
     }
 
     @Bean(name = "KafkaConsumer2")
     public KafkaConsumer<String, String> kafkaConsumer2() {
-        Properties properties = new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 101);
+        Properties properties = KafkaConsumerTemplate(101);
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(properties);
         return kafkaConsumer;
     }
 
     @Bean(name = "KafkaConsumer3")
     public KafkaConsumer<String, String> kafkaConsumer3() {
-        Properties properties = new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 10);
+        Properties properties = KafkaConsumerTemplate(10);
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(properties);
         return kafkaConsumer;
     }

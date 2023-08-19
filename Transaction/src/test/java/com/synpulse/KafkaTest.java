@@ -38,7 +38,7 @@ public class KafkaTest {
     @Autowired
     KafkaServiceImpl kafkaService;
     @Test
-    void testAddKafkaTopic() {
+    void testAddKafkaTopic() throws Exception{
         //100 partitions per topic, one user, one partition
         for(int i = 1; i <= 31; i++) {
             String topicName = "userList" + i;
@@ -66,6 +66,7 @@ public class KafkaTest {
                 adminClient.close();
             }
         }
+        Thread.sleep(200000);
 
     }
 
@@ -107,12 +108,13 @@ public class KafkaTest {
 
 
 
+
     }
 
     @Test
     void addSimulatedData() throws Exception{
         String[]currencyNameList = new String[]{"GBP","USD","CNY","CHF","CAD","KYD","KZT"};
-        for(int c = 1; c <= 30; c++) {
+        for(int c = 21; c <= 30; c++) {
             String topic = "userList" + c;
             Random random = new Random();
             //generate 4 months
@@ -146,7 +148,7 @@ public class KafkaTest {
                 }
             }
         }
-        Thread.sleep(200000);
+        Thread.sleep(20000);
 
 
     }
