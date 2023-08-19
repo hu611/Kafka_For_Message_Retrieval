@@ -1,5 +1,5 @@
 # Kafka_For_Message_Retrieval
-##Project Description
+## Project Description
 This repository contains the implementation of a reusable REST API for retrieving paginated list of money account transactions for a given customer in an arbitrary calendar month. The API calculates the total credit and debit values at the current exchange rate for each transaction page. The transaction data is consumed from a Kafka topic.
 ## Project Structure
 api-test is used to test the project deployment.\
@@ -7,9 +7,9 @@ Auth is used to handle authorization and authentication.\
 Transaction is used to handle transaction retrieval from Kafka.\
 Parent is used to manage the maven package version.\
 project_detail.pdf is used to explain the detail implementation of the project
-##Getting Started
+## Getting Started
 To set up and run the e-Banking Portal REST API on your local machine, follow the steps below:
-###Prerequisites
+### Prerequisites
 ```
 Java Development Kit (JDK) 8
 Apache Maven
