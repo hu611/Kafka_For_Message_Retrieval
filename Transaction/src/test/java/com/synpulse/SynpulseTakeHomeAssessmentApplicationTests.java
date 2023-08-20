@@ -62,7 +62,7 @@ class SynpulseTakeHomeAssessmentApplicationTests {
 
     @Test
     void testStartOffset() {
-        System.out.println("start offset " + kafkaService.getStartOffset("userList3",80,"2022-02-01"));
+        System.out.println("start offset " + kafkaService.getStartOffset("userList31",0,"2023-01-01"));
     }
 
     @Test

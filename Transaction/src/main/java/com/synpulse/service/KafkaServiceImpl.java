@@ -53,7 +53,6 @@ public class KafkaServiceImpl implements KafkaService {
 
         String nextMonth = getNextMonth(date);
         int nextMonthOffset = getStartOffset(topic, partition, nextMonth);
-        System.out.println(nextMonthOffset);
         int retrievedOffset = offset + pageNum * 10;
         if(retrievedOffset < nextMonthOffset) {
             //the retrieved offset is within the range
@@ -89,6 +88,7 @@ public class KafkaServiceImpl implements KafkaService {
         //System.out.println(kafkaConsumer.position(topicPartition));
         Transaction startTransaction = null;
 
+        int start_idx = 0;
         while (monthInBetween != 0 && monthInBetween != 1) {
             List<Transaction> transactionList = getLatestMessageByOffset(topic, partition, offset, kafkaConsumer1);
             if(transactionList == null || transactionList.size() == 0) {
@@ -97,6 +97,11 @@ public class KafkaServiceImpl implements KafkaService {
             }
             startTransaction = transactionList.get(0);
             monthInBetween = compareTwoMonths(startTransaction.getDate(), requestDate);
+            if(start_idx == 0) {
+                offset += monthInBetween * 1000;
+                start_idx++;
+                continue;
+            }
             if(monthInBetween > 1) {
                 offset += (monthInBetween-1) * 1000;
             }
@@ -104,6 +109,7 @@ public class KafkaServiceImpl implements KafkaService {
                 //when there is no
                 return -1;
             }
+
 
         }
 
@@ -140,7 +146,11 @@ public class KafkaServiceImpl implements KafkaService {
     public long compareTwoMonths(String startDate, String endDate) {
         LocalDate startLocalDate = LocalDate.parse(startDate);
         LocalDate startRequestDate = LocalDate.parse(endDate);
-        return ChronoUnit.MONTHS.between(startLocalDate, startRequestDate);
+        long month = ChronoUnit.MONTHS.between(startLocalDate, startRequestDate);
+        if(startLocalDate.getDayOfMonth() > startRequestDate.getDayOfMonth()) {
+            month += 1;
+        }
+        return month;
     }
 
     public String getUserTopic(String userId) {
@@ -162,6 +172,9 @@ public class KafkaServiceImpl implements KafkaService {
         ObjectMapper objectMapper = new ObjectMapper();
         TopicPartition topicPartition = new TopicPartition(topic, partition);
         kafkaConsumer.assign(Collections.singletonList(topicPartition));
+        if(offset < 0) {
+            return new ArrayList<>();
+        }
         kafkaConsumer.seek(topicPartition, offset);
 
         ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(1000));
